@@ -22,13 +22,15 @@ def button_click(btn):
 
     if not end_game:
         if (turn_count):
-            turns_list_first.append(btn.winfo_rootx() + btn.winfo_rooty())
+            turns_list_first.append(btn.winfo_x() + btn.winfo_y())
             button_config(btn, 'x')
             turn_count = False
+
         elif (not turn_count):
-            turns_list_second.append(btn.winfo_rootx() + btn.winfo_rooty())
+            turns_list_second.append(btn.winfo_x() + btn.winfo_y())
             button_config(btn, 'o')
             turn_count = True
+
     else:
         button_config(btn, ' ')
 
@@ -51,14 +53,14 @@ def element_check(number: int, checked_list: list) -> bool:
 def winner_check(turns_list: list) -> bool:
     winner = False
 
-    if ((element_check(133, turns_list) and element_check(191, turns_list) and element_check(249, turns_list)) or
-        (element_check(200, turns_list) and element_check(258, turns_list) and element_check(316, turns_list)) or
-        (element_check(267, turns_list) and element_check(325, turns_list) and element_check(383, turns_list)) or
-        (element_check(133, turns_list) and element_check(200, turns_list) and element_check(267, turns_list)) or
-        (element_check(191, turns_list) and element_check(258, turns_list) and element_check(325, turns_list)) or
-        (element_check(249, turns_list) and element_check(316, turns_list) and element_check(383, turns_list)) or
-        (element_check(133, turns_list) and element_check(258, turns_list) and element_check(383, turns_list)) or
-        (element_check(267, turns_list) and element_check(258, turns_list) and element_check(249, turns_list))):
+    if ((element_check(0, turns_list) and element_check(83, turns_list) and element_check(166, turns_list)) or
+        (element_check(93, turns_list) and element_check(176, turns_list) and element_check(259, turns_list)) or
+        (element_check(186, turns_list) and element_check(269, turns_list) and element_check(352, turns_list)) or
+        (element_check(0, turns_list) and element_check(93, turns_list) and element_check(186, turns_list)) or
+        (element_check(83, turns_list) and element_check(176, turns_list) and element_check(269, turns_list)) or
+        (element_check(166, turns_list) and element_check(259, turns_list) and element_check(352, turns_list)) or
+        (element_check(0, turns_list) and element_check(176, turns_list) and element_check(352, turns_list)) or
+        (element_check(186, turns_list) and element_check(176, turns_list) and element_check(166, turns_list))):
         winner = True
 
     return winner
@@ -76,7 +78,6 @@ window.resizable(width=False, height=False)
 frame = Frame(window)
 frame.pack()
 
-
 turn_count = True
 end_game = False
 turns_list_first = []
@@ -88,7 +89,7 @@ for x in range(3):
         btn.config(font=("Lucida Console", 40, "bold"),
                    text=' ',
                    command=lambda button=btn: button_click(button))
-        btn.grid(column=y, row=x, sticky='nsew')
+        btn.grid(column=y, row=x)
 
 tossup = first_turn_tossup()
 
