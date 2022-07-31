@@ -34,12 +34,13 @@ def button_click(btn):
     else:
         button_config(btn, ' ')
 
-    if (winner_check(turns_list_first)):
+    if (winner_check(btn.winfo_reqwidth(), btn.winfo_reqheight(), turns_list_first)):
         print(f'Game over. {first_name} won. Congratulation!')
         end_game = True
-    elif (winner_check(turns_list_second)):
+    elif (winner_check(btn.winfo_reqwidth(), btn.winfo_reqheight(), turns_list_second)):
         print(f'Game over. {second_name} won. Congratulation!')
         end_game = True
+
 
 def element_check(number: int, checked_list: list) -> bool:
     check = False
@@ -50,17 +51,28 @@ def element_check(number: int, checked_list: list) -> bool:
     return check
 
 
-def winner_check(turns_list: list) -> bool:
+def task_check(f_number: int, s_number: int, t_number: int, checked_list: list) -> bool:
+    check = False
+
+    if (element_check(f_number, checked_list) and
+        element_check(s_number, checked_list) and
+        element_check(t_number, checked_list)):
+        check = True
+
+    return check
+
+
+def winner_check(width: int, height: int, turns_list: list) -> bool:
     winner = False
 
-    if ((element_check(0, turns_list) and element_check(83, turns_list) and element_check(166, turns_list)) or
-        (element_check(93, turns_list) and element_check(176, turns_list) and element_check(259, turns_list)) or
-        (element_check(186, turns_list) and element_check(269, turns_list) and element_check(352, turns_list)) or
-        (element_check(0, turns_list) and element_check(93, turns_list) and element_check(186, turns_list)) or
-        (element_check(83, turns_list) and element_check(176, turns_list) and element_check(269, turns_list)) or
-        (element_check(166, turns_list) and element_check(259, turns_list) and element_check(352, turns_list)) or
-        (element_check(0, turns_list) and element_check(176, turns_list) and element_check(352, turns_list)) or
-        (element_check(186, turns_list) and element_check(176, turns_list) and element_check(166, turns_list))):
+    if (task_check(0, width, width * 2, turns_list) or
+        task_check(height, height + width, height + width * 2, turns_list) or
+        task_check(height * 2, height * 2 + width, height * 2 + width * 2, turns_list) or
+        task_check(0, height, height * 2, turns_list) or
+        task_check(width, width + height, width + height * 2, turns_list) or
+        task_check(width * 2, width * 2 + height, width * 2 + height * 2, turns_list) or
+        task_check(0, width + height, width * 2 + height * 2, turns_list) or
+        task_check(height * 2, width + height, width * 2, turns_list)):
         winner = True
 
     return winner
